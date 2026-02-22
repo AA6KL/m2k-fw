@@ -7,12 +7,31 @@ Firmware License : [![Many Licenses](https://img.shields.io/badge/license-LGPL2+
 
 * Build Instructions
 ```bash
- sudo apt-get install git build-essential fakeroot libncurses5-dev libssl-dev ccache
- sudo apt-get install dfu-util u-boot-tools device-tree-compiler libssl1.0-dev mtools
- sudo apt-get install bc python cpio zip unzip rsync file wget
+# Tested at
+#   (a) Ubuntu 2022.04 with vitis 2023.2 as indicated in the Makefile
+#   (b) Debian 13 with Vitis 2025.2
+ # added by Ken
+ wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+ sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+ sudo apt-get install -y python-is-python3 flex bison rsync
+ sudo apt-get install -y libtinfo5 libncurses5
+ # libncursesw5 maybe outdated and cause problem
+ sudo apt-get install -y libncursesw5
+ # Fix for "vitis 2023.2 install at ubuntu 22.04 hang at insatlled device list"
+ #  If you downloaded the full tarball of Vivado or Vitis, navigate to the extracted folder and run:
+ #  sudo ./installLibs.sh
+ # Then install Vivado or Vitis
+ # end of additional added by Ken
+ sudo apt-get install -y git build-essential fakeroot libncurses5-dev libssl-dev ccache
+ sudo apt-get install -y dfu-util u-boot-tools device-tree-compiler mtools
+ sudo apt-get install -y bc cpio zip unzip rsync file wget
  git clone --recursive https://github.com/analogdevicesinc/m2k-fw.git
  cd m2k-fw
- export VIVADO_SETTINGS=/opt/Xilinx/Vivado/2022.2/settings64.sh
+ # export VIVADO_SETTINGS=/opt/Xilinx/Vivado/2022.2/settings64.sh
+ # or for Vitis 2025.2
+ # export REQUIRED_VIVADO_VERSION=2025.2
+ # export VIVADO_SETTINGS=/opt/Xilinx/2025.2/Vivado/settings64.sh
+ export VIVADO_SETTINGS=/opt/Xilinx/Vivado/2023.2/settings64.sh
  make
 
 ```
